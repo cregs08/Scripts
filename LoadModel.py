@@ -38,20 +38,6 @@ from PIL import Image
 import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('TkAgg')
-"""
-goal:
-1) upload scripts to git hub
-to do on all the scripts: find a good format and make sure they all correspond to that format.
-minimal arugments
-2) get comfortable with tf records.
-follow the turtoiral and then create single output then multiout put
-"""
-
-
-
-"""
-python LoadModel.py -m /Users/cole/PycharmProjects/UsefulScripts/BirdHeadMultiOutput -l /Users/cole/PycharmProjects/UsefulScripts/BirdHeadMultiOutput/annotations/label_map.pbtxt -i /Users/cole/PycharmProjects/UsefulScripts/BirdHeadMultiOutput/images/test -th .3 -n 15 -c 0 -b 3
-"""
 
 
 def build_model_and_restore_checkpoint(MODEL_DIR, checkpoint_num):
