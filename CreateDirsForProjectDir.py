@@ -16,9 +16,7 @@ optional arguments:
     dir to .../workspace/project
 
 """
-"""
-python CreateDirsForProjectDir.py -d /Users/cole/PycharmProjects/UsefulScripts/BirdHeadMultiOutput
-"""
+
 import os
 import argparse
 
@@ -49,6 +47,7 @@ def make_dirs(project_dir):
                     pass
                 dirs[train_test.upper()] = image_dir_path
     print("Workspace created with the following directories:\n", dirs)
+
 
 def main():
 
