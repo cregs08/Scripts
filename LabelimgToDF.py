@@ -243,10 +243,7 @@ if __name__ == '__main__':
     main()
 
 
-"""
-python LabelimgToDF.py -i /Users/cole/PycharmProjects/UsefulScripts/BirdHeadMultiOutput/images/test -s /Users/cole/PycharmProjects/UsefulScripts
 
-"""
 
 
 
