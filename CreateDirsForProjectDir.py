@@ -20,7 +20,7 @@ optional arguments:
 import os
 import argparse
 
-
+gg
 def make_dirs(project_dir):
     dir_name_list = ['annotations', 'exported-models', 'images', 'models', 'pre-trained-models', 'addons']
 

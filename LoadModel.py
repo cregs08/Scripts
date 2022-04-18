@@ -36,7 +36,7 @@ from PIL import Image
 import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('TkAgg')
-
+g
 
 def build_model_and_restore_checkpoint(MODEL_DIR, checkpoint_num):
     def restore_checkpoint(detection_model, CHECKPOINT_PATH):

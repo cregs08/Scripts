@@ -19,7 +19,7 @@ import argparse
 import glob
 import numpy as np
 import tensorflow as tf
-
+hh
 
 def get_jpg_and_xml_path_lists(image_dir):
     jpg_glob_path = os.path.join(image_dir, '*.jpg')
