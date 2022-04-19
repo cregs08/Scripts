@@ -19,7 +19,7 @@ import argparse
 import glob
 import numpy as np
 import tensorflow as tf
-hh
+
 
 def get_jpg_and_xml_path_lists(image_dir):
     jpg_glob_path = os.path.join(image_dir, '*.jpg')
@@ -96,7 +96,7 @@ def check_matching_jpg_and_xml_file_extentions(IMAGE_DIR):
 # https://tensorflow-object-detection-api-tutorial.readthedocs.io/en/latest/training.html
 
 
-def create_xml_df(xml_file_path_list):
+def create_xml_df(xml_file_path_list, image_dir):
     xml_list = []
     for xml_file in xml_file_path_list:
         tree = ET.parse(xml_file)
@@ -104,11 +104,13 @@ def create_xml_df(xml_file_path_list):
         filename = root.find('filename').text
         width = int(root.find('size').find('width').text)
         height = int(root.find('size').find('height').text)
+        path = os.path.join(image_dir, filename)
         for member in root.findall('object'):
             bndbox = member.find('bndbox')
             value = (filename,
                      width,
                      height,
+                     path,
                      member.find('name').text,
                      int(bndbox.find('xmin').text),
                      int(bndbox.find('ymin').text),
@@ -116,8 +118,9 @@ def create_xml_df(xml_file_path_list):
                      int(bndbox.find('ymax').text),
                      )
             xml_list.append(value)
-    column_name = ['filename', 'width', 'height',
+    column_name = ['filename', 'width', 'height', 'path',
                    'class', 'xmin', 'ymin', 'xmax', 'ymax']
+    print(column_name)
     xml_df = pd.DataFrame(xml_list, columns=column_name)
     return xml_df
 
@@ -188,9 +191,12 @@ def load_and_inspect_formatted_xml_df(save_path):
     formatted_xml_df = pd.read_pickle(save_path)
     class_labels = formatted_xml_df['class'].unique()
     label_encodings = formatted_xml_df['label_encoding'].unique()
+    sample_path = formatted_xml_df['path'].iloc[0]
     print(formatted_xml_df.head())
     print('#####\nCOLUMNS')
     print(formatted_xml_df.columns)
+    print('#####\nSAMPLE PATH')
+    print(sample_path)
     print('#####\nCLASS LABELS')
     print(class_labels)
     print('#####\nLABEL ENCODINGS')
@@ -208,7 +214,7 @@ def build_format_save_xml_df_from_label_image_data(IMAGE_DIR, SAVE_DIR):
 
     _, xml_file_path_list = get_jpg_and_xml_path_lists(IMAGE_DIR)
 
-    xml_df = create_xml_df(xml_file_path_list)
+    xml_df = create_xml_df(xml_file_path_list, IMAGE_DIR)
     formatted_df = format_df(xml_df)
     save_path = os.path.join(SAVE_DIR, 'xml_df.dat')
     print(f'Saving dataframe to {SAVE_DIR}')
