@@ -26,6 +26,7 @@ import numpy as np
 import os
 import argparse
 import glob
+import cv2
 
 from object_detection.utils import label_map_util
 from object_detection.utils import config_util
@@ -35,7 +36,8 @@ from object_detection.builders import model_builder
 from PIL import Image
 import matplotlib.pyplot as plt
 import matplotlib
-matplotlib.use('TkAgg')
+try: matplotlib.use('TkAgg')
+except: pass
 
 
 def build_model_and_restore_checkpoint(MODEL_DIR, checkpoint_num):
@@ -90,7 +92,7 @@ def predict_on_image_paths(IMAGE_PATHS, detection_model, category_index,  max_bo
 
         print('Running inference for {}... '.format(image_path), end='')
 
-        image_np = load_image_into_numpy_array(image_path)
+        image_np = cv2.imread(image_path)
         # Things to try:
         # Flip horizontally
         # image_np = np.fliplr(image_np).copy()
@@ -115,6 +117,7 @@ def predict_on_image_paths(IMAGE_PATHS, detection_model, category_index,  max_bo
         label_id_offset = 1
         image_np_with_detections = image_np.copy()
 
+        
         img = viz_utils.visualize_boxes_and_labels_on_image_array(
                 image_np_with_detections,
                 detections['detection_boxes'],
