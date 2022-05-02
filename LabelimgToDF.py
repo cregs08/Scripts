@@ -120,7 +120,6 @@ def create_xml_df(xml_file_path_list, image_dir):
             xml_list.append(value)
     column_name = ['filename', 'width', 'height', 'path',
                    'class', 'xmin', 'ymin', 'xmax', 'ymax']
-    print(column_name)
     xml_df = pd.DataFrame(xml_list, columns=column_name)
     return xml_df
 
@@ -232,7 +231,6 @@ def main():
         '-i', '--imageDir',
         help='path to labelimg data... jps and xml files.',
         type=str,
-        default=None
     )
     parser.add_argument(
         '-s', '--saveDir',
@@ -251,3 +249,5 @@ if __name__ == '__main__':
 
 
 
+#TODO add so that the search for matching file extensions includes different image files eg. png, jpeg..
+#TODO get rid of the nested functions in the format df.
