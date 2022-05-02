@@ -4,7 +4,78 @@ import pandas as pd
 import os
 import glob
 import argparse
+import numpy as np
+import tensorflow as tf
 
+
+def create_one_hot_encoings(label_encoding_col, classes_col):
+    num_classes = len(classes_col.unique())
+
+    gt_classes_one_hot_tensors = []
+    for label_id in label_encoding_col:
+        zero_indexed_groundtruth_classes = tf.convert_to_tensor(
+            np.array([label_id]), dtype=np.int32)
+        gt_classes_one_hot_tensors.append(tf.one_hot(
+            zero_indexed_groundtruth_classes, num_classes))
+    return gt_classes_one_hot_tensors
+
+
+def norm_bbox_cols(norm_df):
+
+    norm_df['xmin_norm'] = norm_df['xmin'] / norm_df['width']
+    norm_df['xmax_norm'] = norm_df['xmax'] / norm_df['width']
+
+    norm_df['ymin_norm'] = norm_df['ymin'] / norm_df['height']
+    norm_df['ymax_norm'] = norm_df['ymax'] / norm_df['height']
+
+    return norm_df
+
+
+def make_bbox_cols(norm_df, bbox_formats):
+    def make_bbox_array(bbox_cols):
+        rows = [np.array([row]) for row in norm_df[bbox_cols].to_numpy()]
+        return rows
+
+    for bbox_cols in bbox_formats:
+        norm_df[bbox_cols] = make_bbox_array(bbox_formats[bbox_cols])
+
+
+def get_bbox_center_width_and_height(norm_df):
+
+    norm_df['bbox_width'] = norm_df['xmax_norm'] - norm_df['xmin_norm']
+    norm_df['bbox_height'] = norm_df['ymax_norm'] - norm_df['ymin_norm']
+
+    norm_df['x_center'] = (norm_df['xmin_norm'] + norm_df['xmax_norm']) / 2
+    norm_df['y_center'] = (norm_df['ymin_norm'] + norm_df['ymax_norm']) / 2
+
+    return norm_df
+
+
+def create_class_ids(norm_df):
+    norm_df['class_label_cat'] = norm_df['class'].astype('category')
+    norm_df['label_encoding'] = norm_df['class_label_cat'].cat.codes
+
+
+def format_df(df):
+    bbox_formats = {
+        'pascal_voc_bb': ['xmin_norm', 'ymin_norm', 'xmax_norm', 'ymax_norm'],
+        'coco_bb': ['xmin_norm', 'ymin_norm', 'bbox_width', 'bbox_height'],
+        'tf_bb': ['ymin_norm', 'xmin_norm', 'ymax_norm', 'xmax_norm'],
+        'yolo_bb' : ['x_center', 'y_center', 'bbox_width', 'bbox_height']
+    }
+    cols_needed_for_norm = ['xmin', 'ymin', 'xmax', 'ymax', 'height', 'width']
+    norm_df = df.copy()
+
+    for col in cols_needed_for_norm:
+        norm_df[col] = norm_df[col].astype('float32')
+
+    norm_bbox_cols(norm_df)
+    get_bbox_center_width_and_height(norm_df)
+    make_bbox_cols(norm_df, bbox_formats)
+    create_class_ids(norm_df)
+    norm_df['one_hot'] = create_one_hot_encoings(norm_df['label_encoding'], norm_df['class'])
+
+    return norm_df
 
 #here we get the required params to resize our cropped image. now for a min factor we are using 1/10 and max is 1/4
 def get_background_and_paste_image_params(background_image_shape,
@@ -134,6 +205,7 @@ def make_and_save_value_list_df(value_list, output_dir):
                    'class', 'xmin', 'ymin', 'xmax', 'ymax']
 
     df = pd.DataFrame(value_list, columns=column_name)
+    df = format_df(df)
     df_save_path = os.path.join(output_dir, 'df.dat')
     pd.to_pickle(df, df_save_path)
 
