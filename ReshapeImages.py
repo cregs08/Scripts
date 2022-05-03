@@ -5,9 +5,9 @@ usage: Reshapes images so that they are compatible with our model to train. will
 
 optional arguments:
     -h, --help            show this help message and exit
-    -d, --dir
+    -i, --dir
     dir to where the image files are located. we assume that the dir is named after the class
-    -h, --height
+    -he, --height
     height of the reshape
     -w, --width
     width of the rehape
@@ -81,22 +81,22 @@ def main():
     parser = argparse.ArgumentParser(
         description="Reshaping images.. can save to a new directory or overwrite existing")
     parser.add_argument('-i',
-                        '--imageDir',
+                        '--IMAGEDIR',
                         help='path to the directory where our image files to be reshaped are stored',
                         type=str
     )
     parser.add_argument('-he',
-                        '--height',
+                        '--HEIGHT',
                         help='height to use for our reshape',
                         type=int,
                         )
     parser.add_argument('-w',
-                        '--width',
+                        '--WIDTH',
                         help='height to use for our reshape',
                         type=int,
                         )
     parser.add_argument('-o',
-                        '--outputDir',
+                        '--OUTPUTDIR',
                         help='if we want to keep the orginal file and save to a different directory',
                         type=str,
                         default=''
@@ -104,7 +104,7 @@ def main():
 
     args = parser.parse_args()
 
-    reshape_images(IMAGE_DIR=args.imageDir, OUTPUT_DIR=args.outputDir, height=args.height, width=args.width)
+    reshape_images(IMAGE_DIR=args.IMAGEDIR, height=args.HEIGHT, width=args.WIDTH, OUTPUT_DIR=args.OUTPUTDIR)
 
 
 if __name__ == '__main__':
