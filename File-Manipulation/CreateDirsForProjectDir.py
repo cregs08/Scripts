@@ -22,7 +22,7 @@ import argparse
 
 
 def make_dirs(project_dir):
-    dir_name_list = ['annotations', 'exported-models', 'images', 'models', 'pre-trained-models', 'addons']
+    dir_name_list = ['annotations', 'exported-models', 'images', 'models', 'pre-trained-models', 'addons', 'labelimg-df']
 
     dirs = {}
     try:
@@ -65,4 +65,3 @@ def main():
 if __name__ == '__main__':
     main()
 
-#TODO make labelimg df dir
