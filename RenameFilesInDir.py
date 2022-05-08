@@ -52,7 +52,7 @@ def main():
     parser.add_argument('-d',
                         '--dir',
                         help='path to the directory where our image files to be renamed are stored',
-                        type='str'
+                        type=str
     )
     parser.add_argument('-c',
                         '--className',
@@ -73,3 +73,7 @@ def main():
         class_name = args.dir.split('/')[-1:][0]
 
     rename_files(image_dir=args.dir, class_name=class_name, extension=args.ext)
+
+
+if __name__ == '__main__':
+    main()
