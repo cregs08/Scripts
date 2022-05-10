@@ -206,7 +206,7 @@ def make_and_save_value_list_df(value_list, output_dir):
 
     df = pd.DataFrame(value_list, columns=column_name)
     df = format_df(df)
-    df_save_path = os.path.join(output_dir, 'df.dat')
+    df_save_path = os.path.join(output_dir, 'non_aug_df.dat')
     pd.to_pickle(df, df_save_path)
 
 
