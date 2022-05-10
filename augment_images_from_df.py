@@ -219,3 +219,7 @@ def main():
 
 #TODO find out best augmentation practices
 
+if __name__ == '__main__':
+    main()
+
+
