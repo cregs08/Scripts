@@ -12,7 +12,7 @@ class-name_image_or_mask_[0-9]+_patch_[0-9]+.ext
 Cabernet-Sauvignon_mask_0_patch_0.jpg
 arguments:
     -h, --help            show this help message and exit
-    -i IMAGEMASKDIR, --IMAGEMASKDIR
+    -d IMAGEMASKDIR, --IMAGEMASKDIR
                         Path to the folder where the image dataset is stored.
     -im IMAGEORMASK --IMAGEORMASK
                         weather we are looking at images or masks. default will be gotten from dir images/class-name
