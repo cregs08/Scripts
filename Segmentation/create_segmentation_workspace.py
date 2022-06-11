@@ -86,3 +86,5 @@ def main():
 
     make_workspace(project_dir=args.PROJECTDIR, class_names=class_names)
 
+if __name__ == '__main__':
+    main()
