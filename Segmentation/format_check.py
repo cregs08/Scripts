@@ -170,6 +170,7 @@ def check_args_and_check_paths(image_or_mask, image_mask_dir, class_name, orig_f
                               patch_format=patch_format,
                               ext=ext)
     correct_format = checked_args['correct_format']
+    image_or_mask = checked_args['image_or_mask']
     display_selected_args(image_or_mask, image_mask_dir, correct_format)
     check_paths(image_mask_dir, correct_format)
 
