@@ -53,7 +53,8 @@ def check_class_name_project_dir(project_dir, class_names):
 
 
 def make_workspace(project_dir, class_names):
-    if check_class_name_project_dir(project_dir, class_names):
+    checked = check_class_name_project_dir(project_dir, class_names)
+    if checked:
         for d in dir_list:
             current_dir = os.path.join(project_dir, d)
             make_dir_if_not_exist(current_dir)
