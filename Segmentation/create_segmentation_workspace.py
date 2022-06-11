@@ -34,22 +34,40 @@ def make_dir_if_not_exist(path):
         os.mkdir(path)
 
 
+def check_class_name_project_dir(project_dir, class_names):
+    y_n = True
+    while y_n:
+        y_n = input(f'Saving to the project dir {project_dir}\nContinue (y/n)')
+        if y_n == 'y':
+            break
+        if y_n == 'n':
+            return False
+    y_n = True
+    while y_n:
+        y_n = input(f'Found the following classes {class_names}\nContinue (y/n)')
+        if y_n == 'y':
+            break
+        if y_n == 'n':
+            return False
+    return True
+
+
 def make_workspace(project_dir, class_names):
+    if check_class_name_project_dir(project_dir, class_names):
+        for d in dir_list:
+            current_dir = os.path.join(project_dir, d)
+            make_dir_if_not_exist(current_dir)
 
-    for d in dir_list:
-        current_dir = os.path.join(project_dir, d)
-        make_dir_if_not_exist(current_dir)
+            if d == 'Orignal-Images-Masks':
+                tiff_dir = os.path.join(current_dir, 'Tiff-Files')
+                make_dir_if_not_exist(tiff_dir)
 
-        if d == 'Orignal-Images-Masks':
-            tiff_dir = os.path.join(current_dir, 'Tiff-Files')
-            make_dir_if_not_exist(tiff_dir)
-
-        for sd in sub_dir_list:
-            current_sub_dir = os.path.join(current_dir, sd)
-            make_dir_if_not_exist(current_sub_dir)
-            for c in class_names:
-                class_name_dir = os.path.join(current_sub_dir, c)
-                make_dir_if_not_exist(class_name_dir)
+            for sd in sub_dir_list:
+                current_sub_dir = os.path.join(current_dir, sd)
+                make_dir_if_not_exist(current_sub_dir)
+                for c in class_names:
+                    class_name_dir = os.path.join(current_sub_dir, c)
+                    make_dir_if_not_exist(class_name_dir)
 
 
 def main():
