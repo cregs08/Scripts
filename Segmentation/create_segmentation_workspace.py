@@ -62,6 +62,9 @@ def make_workspace(project_dir, class_names):
             if d == 'Orignal-Images-Masks':
                 tiff_dir = os.path.join(current_dir, 'Tiff-Files')
                 make_dir_if_not_exist(tiff_dir)
+                for c in class_names:
+                    class_name_dir = os.path.join(tiff_dir, c)
+                    make_dir_if_not_exist(class_name_dir)
 
             for sd in sub_dir_list:
                 current_sub_dir = os.path.join(current_dir, sd)
