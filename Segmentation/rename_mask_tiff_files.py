@@ -102,9 +102,10 @@ def do_checks_and_rename_and_save_tiff_paths(tiff_mask_dir, mask_output_dir, ape
 
     if not class_name :
         class_name = os.path.basename(tiff_mask_dir)
-    print(tiff_paths)
     glob_path = os.path.join(tiff_mask_dir, "*.tiff")
     tiff_paths = glob.glob(glob_path)
+    print(tiff_paths)
+
     incorrectly_formatted_files = get_incorrect_formatted_tiff_files(tiff_paths, class_name, apeer_class_name)
     sample_tiff = os.path.basename(tiff_paths[0])
     sample_new_path = rename_tiff_file(sample_tiff, class_name)
