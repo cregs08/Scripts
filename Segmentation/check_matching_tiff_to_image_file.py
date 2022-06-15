@@ -109,7 +109,7 @@ def get_valid_invalid_image_to_tiff_pairs(image_paths, tiff_dir, class_name, ape
         elif len(tiff_path) > 1:
             print(f'Found {len(tiff_path)} matches for image file\n{image_file}')
         else:
-            invalid_tiff_paths.append(os.path.join(tiff_dir, tiff_filename))
+            invalid_tiff_paths.append(image_path)
     checked_paths = {
         'valid_paths': valid_tiff_paths,
         'invalid_paths': invalid_tiff_paths
