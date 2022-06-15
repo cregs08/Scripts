@@ -105,9 +105,10 @@ def do_checks_and_rename_and_save_tiff_paths(tiff_mask_dir, mask_output_dir, ape
     glob_path = os.path.join(tiff_mask_dir, "*.tiff")
     tiff_paths = glob.glob(glob_path)
 
-    incorrectly_formatted_files = get_incorrect_formatted_tiff_files(tiff_paths, class_name, apeer_class_name)
     sample_tiff = os.path.basename(tiff_paths[0])
     sample_new_path = rename_tiff_file(sample_tiff, class_name)
+    print(sample_new_path)
+    incorrectly_formatted_files = get_incorrect_formatted_tiff_files(tiff_paths, class_name, apeer_class_name)
 
     mask_output_dir = os.path.join(mask_output_dir, class_name)
     if check_num_incorrect_format(incorrectly_formatted_files) and confirm_mask_outputdir(mask_output_dir,
