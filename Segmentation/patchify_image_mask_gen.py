@@ -53,7 +53,7 @@ class CustomDatagenImageMaskPatchify(Sequence):
                  shuffle=False,
                  ):
         self.df = df.copy()
-        self.file_numbers = self.df['file_num']
+        self.file_numbers = self.df['file']
         self.class_name = df['class_name'].iloc[0]
         self.batch_size = batch_size
         self.output_image_dir = output_image_dir
@@ -187,7 +187,10 @@ class CustomDatagenImageMaskPatchify(Sequence):
 def make_root_dir_sub_dir(root_dir, sub_dir):
     new_dir = os.path.join(root_dir, sub_dir)
     if not os.path.exists(new_dir):
-        os.mkdir(new_dir)
+        try:
+            os.mkdir(new_dir)
+        except:
+            pass
     return new_dir
 
 
