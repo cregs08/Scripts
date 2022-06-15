@@ -236,7 +236,6 @@ def main():
     image_dir = args.IMAGEDIR
     class_name = args.CLASSNAME
     apeer_class_name = args.APEERCLASSNAME
-    print(args)
 
     check_tiff_path_format_and_tiff_image_pairs(tiff_dir=tiff_dir,
                                                 image_dir=image_dir,
