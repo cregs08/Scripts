@@ -88,10 +88,13 @@ def get_valid_invalid_tiff_to_image_pairs(tiff_paths, image_dir, class_name, ext
 
 
 #expected tiff format: {class-name}-{file_num}_{apeer_class_name}.ome.tiff
+#Cabernet-Sauvignon-8_Cabernet.ome.tiff
+#Cabernet-Sauvignon_13_Cabernet.ome.tiff
+#returns the tiff format with the filenumber from image_file
 def make_tiff_filename_from_image_file(image_file, class_name, apeer_class_name):
     file_num = get_digits_from_file(image_file)
-    tiff_file = class_name + '-' + file_num + '_' + apeer_class_name + '.ome.tiff'
-    return tiff_file
+    tiff_filename = class_name + "[-_]" + file_num + "[-_]" + apeer_class_name + '.ome.tiff'
+    return tiff_filename
 
 
 def get_valid_invalid_image_to_tiff_pairs(image_paths, tiff_dir, class_name, apeer_class_name):
@@ -100,12 +103,13 @@ def get_valid_invalid_image_to_tiff_pairs(image_paths, tiff_dir, class_name, ape
     for image_path in image_paths:
         image_file = os.path.basename(image_path)
         tiff_filename = make_tiff_filename_from_image_file(image_file, class_name, apeer_class_name)
-        tiff_path = os.path.join(tiff_dir, tiff_filename)
-        if os.path.exists(tiff_path):
-            valid_tiff_paths.append(tiff_path)
+        tiff_path = glob.glob(os.path.join(tiff_dir, tiff_filename))
+        if len(tiff_path) > 0:
+            valid_tiff_paths.append(tiff_path[0])
+        elif len(tiff_path) > 1:
+            print(f'Found {len(tiff_path)} matches for image file\n{image_file}')
         else:
-
-            invalid_tiff_paths.append(tiff_path)
+            invalid_tiff_paths.append(os.path.join(tiff_dir, tiff_filename))
     checked_paths = {
         'valid_paths': valid_tiff_paths,
         'invalid_paths': invalid_tiff_paths
@@ -192,15 +196,16 @@ def check_tiff_path_format_and_tiff_image_pairs(tiff_dir, image_dir, class_name,
     tiff_mask_paths = glob.glob(tiff_glob_path)
     total_mask_paths = len(tiff_mask_paths)
 
-    image_glob_path =  os.path.join(image_dir,'*'+ext )
+    image_glob_path = os.path.join(image_dir,'*'+ext )
     image_paths = glob.glob(image_glob_path)
     total_image_paths = len(image_paths)
 
     display_total_paths(total_image_paths, total_mask_paths)
 
     check_tiff_paths(tiff_mask_paths, class_name, apeer_class_name)
-    check_image_to_tiff_pairs(image_paths, tiff_dir, class_name, apeer_class_name)
     check_tiff_to_image_pairs(tiff_mask_paths, image_dir, class_name, ext)
+
+    check_image_to_tiff_pairs(image_paths, tiff_dir, class_name, apeer_class_name)
 
     print('\nDone checking pairs!')
 
@@ -246,3 +251,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+
+
