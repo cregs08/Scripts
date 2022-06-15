@@ -28,7 +28,7 @@ checking format for tiff files
 def check_tiff_file_format(tiff_file, class_name, apeer_class_name):
     rex_pattern = "[0-9]+"
     extension = '.ome.tiff'
-    dash_or_underscore = '[_-]+'
+    dash_or_underscore = '[_\-]+'
     correct_format = class_name + dash_or_underscore + rex_pattern + dash_or_underscore + apeer_class_name + extension
     rex = re.compile(correct_format)
     if rex.match(tiff_file):
