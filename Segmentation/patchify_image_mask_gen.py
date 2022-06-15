@@ -53,7 +53,7 @@ class CustomDatagenImageMaskPatchify(Sequence):
                  shuffle=False,
                  ):
         self.df = df.copy()
-        self.file_numbers = self.df['file']
+        self.file_numbers = self.df['file_num']
         self.class_name = df['class_name'].iloc[0]
         self.batch_size = batch_size
         self.output_image_dir = output_image_dir
