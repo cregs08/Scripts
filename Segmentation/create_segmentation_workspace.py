@@ -25,7 +25,7 @@ optional arguments:
 import os
 import argparse
 
-dir_list = ['Orignal-Images-Masks', 'Patches']
+dir_list = ['Original-Images-Masks', 'Patches']
 sub_dir_list = ['Images', 'Masks']
 
 
