@@ -28,7 +28,7 @@ import glob
 import argparse
 
 
-#takes in a tiff file in the following format: Cabernet-Sauvignon-0_Cabernet.ome.tiff
+#takes in a tiff file in the following format: Cabernet-Sauvignon_0_Cabernet.ome.tiff
 def rename_tiff_file(tiff_file, class_name, ext='.jpg'):
     file_num = get_digits_from_file(tiff_file)
     mask_filename = class_name + '_mask_' + str(file_num) + ext
@@ -44,7 +44,7 @@ def get_digits_from_file(file):
 def get_incorrect_formatted_tiff_files(tiff_files, class_name, apeer_class_name):
     regex_pattern = "[0-9]+"
     extenstiion = '.ome.tiff'
-    correct_format = class_name + '-' + regex_pattern + '_' + apeer_class_name + extenstiion
+    correct_format = class_name + '_' + regex_pattern + '_' + apeer_class_name + extenstiion
     rex = re.compile(correct_format)
 
     incorrect_format = []
@@ -104,7 +104,6 @@ def do_checks_and_rename_and_save_tiff_paths(tiff_mask_dir, mask_output_dir, ape
         class_name = os.path.basename(tiff_mask_dir)
     glob_path = os.path.join(tiff_mask_dir, "*.tiff")
     tiff_paths = glob.glob(glob_path)
-    print(tiff_paths)
 
     incorrectly_formatted_files = get_incorrect_formatted_tiff_files(tiff_paths, class_name, apeer_class_name)
     sample_tiff = os.path.basename(tiff_paths[0])
