@@ -45,6 +45,7 @@ def get_incorrect_formatted_tiff_files(tiff_files, class_name, apeer_class_name)
     regex_pattern = "[0-9]+"
     extenstiion = '.ome.tiff'
     correct_format = class_name + '_' + regex_pattern + '_' + apeer_class_name + extenstiion
+    print(correct_format)
     rex = re.compile(correct_format)
 
     incorrect_format = []
