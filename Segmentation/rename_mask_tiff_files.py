@@ -43,10 +43,9 @@ def get_digits_from_file(file):
 #takes in a tiff path and sees if the filename is the correct format. appends the full path if it is not.
 def get_incorrect_formatted_tiff_files(tiff_files, class_name, apeer_class_name):
     file_num = "[0-9]+"
-    dash_or_underscore = "_|-"
+    dash_or_underscore = "[-_]+"
     extenstiion = '.ome.tiff'
     correct_format = class_name + dash_or_underscore + file_num + dash_or_underscore + apeer_class_name + extenstiion
-    print('************' + correct_format)
     rex = re.compile(correct_format)
 
     incorrect_format = []
@@ -149,3 +148,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
